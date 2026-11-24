@@ -32,6 +32,7 @@ void main() {
     test('formats a value without floating-point tail', () {
       expect(formatNumber(10 / 3), '3.333333');
       expect(formatNumber(3.0), '3');
+      expect(formatNumber(3.5), '3.5');
     });
   });
 }
