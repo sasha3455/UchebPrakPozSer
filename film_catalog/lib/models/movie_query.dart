@@ -10,6 +10,7 @@ class MovieQuery {
     this.page = 1,
     this.size = 10,
     this.includeDeleted = false,
+    this.forceError = false,
   });
 
   final String search;
@@ -22,6 +23,7 @@ class MovieQuery {
   final int page;
   final int size;
   final bool includeDeleted;
+  final bool forceError;
 
   MovieQuery copyWith({
     String? search,
@@ -34,6 +36,7 @@ class MovieQuery {
     int? page,
     int? size,
     bool? includeDeleted,
+    bool? forceError,
     bool resetPage = true,
   }) {
     return MovieQuery(
@@ -47,6 +50,7 @@ class MovieQuery {
       page: resetPage ? 1 : (page ?? this.page),
       size: size ?? this.size,
       includeDeleted: includeDeleted ?? this.includeDeleted,
+      forceError: forceError ?? this.forceError,
     );
   }
 
@@ -65,6 +69,7 @@ class MovieQuery {
     if (page != 1) parameters['page'] = '$page';
     if (size != 10) parameters['size'] = '$size';
     if (includeDeleted) parameters['deleted'] = 'true';
+    if (forceError) parameters['error'] = 'true';
     return parameters;
   }
 
@@ -84,6 +89,7 @@ class MovieQuery {
           ? parseInt(uri.queryParameters['size'])!
           : 10,
       includeDeleted: uri.queryParameters['deleted'] == 'true',
+      forceError: uri.queryParameters['error'] == 'true',
     );
   }
 
@@ -99,7 +105,8 @@ class MovieQuery {
       sortAscending == other.sortAscending &&
       page == other.page &&
       size == other.size &&
-      includeDeleted == other.includeDeleted;
+      includeDeleted == other.includeDeleted &&
+      forceError == other.forceError;
 
   @override
   int get hashCode => Object.hash(
@@ -113,6 +120,7 @@ class MovieQuery {
     page,
     size,
     includeDeleted,
+    forceError,
   );
 
   static const _unset = Object();

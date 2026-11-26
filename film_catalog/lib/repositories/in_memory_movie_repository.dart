@@ -12,6 +12,9 @@ class InMemoryMovieRepository implements MovieRepository {
   @override
   Future<PageResult<Movie>> find(MovieQuery q) async {
     await Future<void>.delayed(const Duration(milliseconds: 220));
+    if (q.forceError) {
+      throw StateError('Демонстрационная ошибка загрузки каталога');
+    }
     var rows = _movies.where((m) => q.includeDeleted || !m.isDeleted).toList();
     final needle = q.search.trim().toLowerCase();
     if (needle.isNotEmpty) {
